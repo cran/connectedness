@@ -1,0 +1,30 @@
+# NEWS
+#--------------------------------------------------------------------------
+# What: What are the news for connectedness package?
+# Time-stamp: <2006-05-02 02:28:04 ggorjan>
+#--------------------------------------------------------------------------
+
+# 2006-05-01 version 0.2
+#--------------------------------------------------------------------------
+
+o Levels of both factors are stored in ret$sets. Argument factor added to
+  levelsBySet to print levels of both factors or only one of
+  them. 2006-05-02
+
+o Subset slot in output of connectedness can be ommited; subset
+  appropriately modified. 2006-05-02
+
+o Complete reorganization in arguments for plot.connectedness(). Now
+  separate arguments for plot, polygons, points and lines are
+  possible. Additionaly argument set added to plot. 2006-05-02
+
+o Added arguments lines and linesSet to plot.connectedness() to draw lines
+  between connected cells. 2006-05-01
+
+# 2006-04-30 version 0.1
+#--------------------------------------------------------------------------
+
+o Initial version 0.1.
+
+#--------------------------------------------------------------------------
+# NEWS ends here

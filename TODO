@@ -1,0 +1,30 @@
+# TODO
+#--------------------------------------------------------------------------
+# What: ToDo, plans, ...
+# Time-stamp: <2006-05-01 22:38:45 ggorjan>
+#--------------------------------------------------------------------------
+
+# SHORT-TERM
+#--------------------------------------------------------------------------
+
+- submit figure to RGG
+- add one larger (in terms of number of levels and factors) example
+- write vignette for two-way classification
+- NA handling (it is not strictly neccessary to exclude NA's for subset)
+- example function for many factors i.e. all in one - is this actually
+  Weeks & Wiliams procedure or can we extend Fernando's method in more than
+  two dimensions?
+
+# LONG_TERM
+#--------------------------------------------------------------------------
+
+- work on other approaches
+
+# IF?
+#--------------------------------------------------------------------------
+
+- write a JSS paper
+- citation()
+
+#--------------------------------------------------------------------------
+# TODO ends here

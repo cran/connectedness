@@ -1,0 +1,15 @@
+## NAMESPACE
+###------------------------------------------------------------------------
+## What: NAMESPACE file
+## $Id$
+## Time-stamp: <2006-04-30 21:23:42 ggorjan>
+###------------------------------------------------------------------------
+
+export(connectedness,
+       levelsBySet)
+S3method(print, connectedness)
+S3method(plot, connectedness)
+S3method(subset, connectedness)
+
+###------------------------------------------------------------------------
+## NAMESPACE ends here
