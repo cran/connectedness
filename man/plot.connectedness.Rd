@@ -1,19 +1,21 @@
 % plot.connectedness.Rd
 %--------------------------------------------------------------------------
-% What: Plot disconnected sets for two-way classification
+% What: Plot disconnected sets in a two-way classification
 % $Id$
-% Time-stamp: <2006-05-02 02:01:31 ggorjan>
+% Time-stamp: <2006-08-08 11:33:29 ggorjan>
 %--------------------------------------------------------------------------
 
 \name{plot.connectedness}
 
 \alias{plot.connectedness}
 
-\title{Plot disconnected sets for two-way classification}
+\title{Plot disconnected sets in a two-way classification}
 
 \description{
-  \code{plot.connectedness} plots disconnected sets for two-way
-  classification without interaction.   
+
+\code{plot.connectedness} plots disconnected sets in a two-way
+classification without interaction.
+
 }
 
 \usage{
@@ -24,7 +26,7 @@ plot.connectedness(x, set=NULL, matrix=TRUE, scale=TRUE,
                                 ylab=x$factors[2]),
                    polygonArg=NULL,
                    pointsArg=list(pch=rep(19, x$nSets)),
-                   linesArg=NULL, ...)
+                   linesArg=NULL, \ldots)
 }
 
 \arguments{
@@ -45,28 +47,34 @@ plot.connectedness(x, set=NULL, matrix=TRUE, scale=TRUE,
     matrix=FALSE, see details}
   \item{linesArg}{list, arguments passed to \code{lines} if lines=TRUE,
     see details}
-  \item{...}{arguments for other methods, not used}
+  \item{\ldots}{arguments for other methods, not used}
 }
 
 \details{
-  Colors for polygons, points and lines can be given with \code{col}
-  or separately with \code{ploygonArg}, \code{pointsArg} and
-  \code{linesArg}. By default \code{col} is NULL and colors are given
-  internally. Set of colors is taken from \pkg{RColorBrewer} package,
-  specifically from qualitative palettes. Read help page of
-  \code{\link[RColorBrewer]{brewer.pal}} for more. Only 54 colors are
-  defined and an error is issued, if there are more than 54 sets in your
-  data. You should define colors by yourself in that case. For a start
-  you can access 54 internal colors with \code{connectedness:::.colors}.
 
-  Length of all arguments in \code{ploygonArg}, \code{pointsArg} and
-  \code{linesArg} is assumed to be equal to then number of sets in
-  \code{x}. If it is less, recycling will occur. Therefore, result might
-  be a mess, unless length of arguments is 1. In last case all set
-  will have equal value for the corresponding argument(s).   
+Colors for polygons, points and lines can be given with \code{col} for
+all elements or separately within \code{ploygonArg}, \code{pointsArg}
+and \code{linesArg}. By default \code{col} is NULL and colors are given
+internally. Set of colors is taken from \pkg{RColorBrewer} package,
+specifically from qualitative palettes. Read help page of
+\code{\link[RColorBrewer]{brewer.pal}} for more. Only 54 colors are
+defined and an error is issued, if there are more than 54 sets in your
+data. You should define colors by yourself in that case. For a start you
+can access 54 internal colors with \code{connectedness:::.colors}.
+
+Length of all arguments in \code{ploygonArg}, \code{pointsArg} and
+\code{linesArg} is assumed to be equal to the number of sets in
+\code{x}. If it is less, recycling will occur. Therefore, result might
+be a mess, unless lengths of arguments are 1. In last case all sets will
+have equal value for the corresponding argument(s).
+
+Plot does not handle \code{drop} slot in \code{x} and draws cells only
+for used levels. This might change if I get a got idea how to plot
+"missing" cels ;)
+
 }
 
-\author{Gregor Gorjanc}
+\author{Gregor Gorjanc (colors were taken from RColorBrewer package)}
 
 \seealso{
   \code{\link{connectedness}}, \code{\link{levelsBySet}} and
@@ -83,7 +91,7 @@ tmp <- connectedness(x=connect$group, y=connect$season)
 par(mfrow=c(2, 2))
 plot(tmp)
 
-plot(tmp, matrix=FALSE, lines=TRUE, col=c("red", "blue"),
+plot(tmp, matrix=FALSE, lines=TRUE, col=c("green", "blue"),
      pointsArg=list(pch=c(15, 19), cex=2), linesArg=list(lwd=2))
 
 plot(tmp, scale=FALSE, lines=TRUE, linesSet=1,
@@ -94,7 +102,6 @@ plot(tmp, set=2, col=c("gray"),
 }
 
 \keyword{hplot}
-\keyword{manip}
 
 %--------------------------------------------------------------------------
 % plot.connectedness.Rd ends here

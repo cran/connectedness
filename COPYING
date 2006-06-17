@@ -1,22 +1,22 @@
-connectedness version 0.1
+connectedness version 0.2
 Copyright (C) 2006 Gregor Gorjanc
 
-This library is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 2.1 of the License, or (at
-your option) any later version.
+This package is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2 of the License, or (at your option)
+any later version.
 
-This library is distributed in the hope that it will be useful, but WITHOUT
+This package is distributed in the hope that it will be useful, but WITHOUT
 ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
-for more details.
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
 
-You should have received a copy of the GNU Lesser General Public License
-along with this library; if not, write to the Free Software Foundation,
-Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA You can also
-download it from http://www.gnu.org/copyleft/lgpl.html in HTML and from
-http://www.gnu.org/copyleft/lgpl.txt in plain text format.
+You should have received a copy of the GNU General Public License along
+with this package; if not, write to the Free Software Foundation, Inc., 51
+Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. You can also download
+it from http://www.gnu.org/copyleft/gpl.html in HTML and from
+http://www.gnu.org/copyleft/gpl.txt in plain text format.
 
-Additionally, you can also get a copy at R_HOME/share/licenses/LGPL*,
+Additionally, you can also get a copy at R_HOME/share/licenses/GPL*,
 where R_HOME indicates root of R installation, say C:/Program Files/R/R-2.3.0
 for R 2.3.0 under MS Windows.

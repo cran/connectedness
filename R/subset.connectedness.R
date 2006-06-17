@@ -2,15 +2,22 @@
 ###------------------------------------------------------------------------
 ## What: Subset method
 ## $Id$
-## Time-stamp: <2006-05-01 22:44:46 ggorjan>
+## Time-stamp: <2006-08-08 03:24:18 ggorjan>
 ###------------------------------------------------------------------------
 
-subset.connectedness <- function(x, data, set=NULL, ...)
+subset.connectedness <- function(x, data, ..., set=NULL, dropNA=NULL)
 {
-  if (is.null(x$subset)) stop("subset slot NULL")
-  if (is.null(set)) set <- x$sets$Set
+  if(!is.data.frame(x$subset)) stop("subset slot is empty")
+  if(is.null(set)) set <- x$sets$Set
+  if(is.null(dropNA)) dropNA <- x$drop
   test <- x$subset$set %in% set
-  subset(data[rownames(x$subset), ], subset=test, ...)
+  if(dropNA) {
+    ind <- x$subset$keep
+    test <- test[ind]
+  } else {
+    ind <- 1:nrow(data)
+  }
+  return(subset(data[ind, ], subset=test, ...))
 }
 
 ###------------------------------------------------------------------------

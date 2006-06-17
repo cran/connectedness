@@ -2,28 +2,33 @@
 ###------------------------------------------------------------------------
 ## What: Find disconnected sets for two-way classification
 ## $Id$
-## Time-stamp: <2006-05-01 23:47:32 ggorjan>
+## Time-stamp: <2006-08-09 08:03:28 ggorjan>
 ###------------------------------------------------------------------------
 
-connectedness <- function(x, y, sort=TRUE, subset=TRUE)
+connectedness <- function(x, y, sort=TRUE, subset=TRUE, drop=FALSE)
 {
-  ## --- Checks ---
+  ## --- Checks & Setup ---
 
   lengthX <- length(x)
-  if (lengthX != length(y))
-    stop(paste(sQuote("x"), "and", sQuote("y"), "must have the same length"))
+  if(lengthX != length(y))
+    stop("'x' and 'y' must have the same length")
 
   xLab <- deparse(substitute(x))
   yLab <- deparse(substitute(y))
 
   ## --- Remove NA's and unused levels ---
 
+  xOrig <- x
+  yOrig <- y
   full <- complete.cases(x, y)
-  if (lengthX != sum(full)) {
-    x <- x[full]
-    y <- y[full]
-    if (is.factor(x)) x <- factor(x)
-    if (is.factor(y)) y <- factor(y)
+
+  if(drop) {
+    if(lengthX != sum(full)) {
+      x <- x[full]
+      y <- y[full]
+      if(is.factor(x)) x <- factor(x) # \ drop unused levels if these
+      if(is.factor(y)) y <- factor(y) # / are factors
+    }
   }
 
   ## --- Create table ---
@@ -32,21 +37,21 @@ connectedness <- function(x, y, sort=TRUE, subset=TRUE)
   h <- tab
   cols <- ncol(h)
   rows <- nrow(h)
-  for (i in 2:cols) {
+  for(i in 2:cols) {
     h[h[, i] > 0, i] <- i
   }
 
   ## --- Find sets ---
 
   c <- rep(0, times=nrow(h))
-  for (i in 1:cols) {
+  for(i in 1:cols) {
     c <- c + h[, i]
     test <- c > i
-    if (any(test)) {
+    if(any(test)) {
       d <- c[test]
       c[test] <- i
       test <- c %in% (d - i)
-      if (any(test)) c[test] <- i
+      if(any(test)) c[test] <- i
     }
   }
 
@@ -55,39 +60,41 @@ connectedness <- function(x, y, sort=TRUE, subset=TRUE)
   sets <- unique(c)
   nSets <- length(sets)
 
-  ret <- vector(mode="list", length=6)
-  names(ret) <- c("factors", "nlevels", "nSets", "sets", "table", "subset")
+  ret <- vector(mode="list", length=7)
+  names(ret) <- c("factors", "nlevels", "nSets", "sets", "table", "subset", "drop")
   ret[[1]] <- c(xLab, yLab)
   ret[[2]] <- c(rows, cols)
   ret[[3]] <- nSets
   ret[[4]] <- data.frame(Set=1:nSets, Freq=0, Percent=0, Levels1=NA, Levels2=NA)
   ret[[5]] <- as.data.frame(tab)
-  if (subset) {
-    ret[[6]] <- data.frame(x=x, set=1)
-    rownames(ret$subset) <- which(full)
+  if(subset) {
+    ret[[6]] <- data.frame(keep=full, set=1)
+  } else {
+    ret[[6]] <- NA
   }
+  ret[[7]] <- drop
   ret$table <- ret$table[!(ret$table$Freq == 0), ]
   ret$table$set <- 1
   rownames(ret$table) <- 1:nrow(ret$table)
 
-  for (i in seq(along=sets)) {
+  for(i in seq(along=sets)) {
     tmp <- names(c)[c == sets[i]]
     tmp1 <- ret$table[ret$table$x %in% tmp, "y"]
     ret$sets[i, "Freq"] <- sum(x %in% tmp)
-    ret$sets[i, "Percent"] <- ret$sets[i, "Freq"] / lengthX
-    ret$sets[i, "Levels1"] <- paste(tmp, collapse=" ")
-    ret$sets[i, "Levels2"] <- paste(tmp1, collapse=" ")
+    ret$sets[i, "Percent"] <- ret$sets[i, "Freq"] / lengthX * 100
+    ret$sets[i, "Levels1"] <- paste(unique(tmp), collapse=" ")
+    ret$sets[i, "Levels2"] <- paste(unique(tmp1), collapse=" ")
     ret$table[(ret$table$x %in% tmp), "set"] <- i
-    if (subset) {
-      ret$subset[(ret$subset$x %in% tmp), "set"] <- i
+    if(subset) {
+      ret$subset[(x %in% tmp), "set"] <- i
     }
   }
-  if (sort) {
+  if(sort) {
     ret$sets <- ret$sets[order(ret$sets$Freq, decreasing=TRUE), ]
     ret$sets[, "Set"] <- rownames(ret$sets) <- 1:nSets
   }
 
-  class(ret) <- c("list", "connectedness")
+  class(ret) <- c("connectedness", class(ret))
   return(ret)
 }
 

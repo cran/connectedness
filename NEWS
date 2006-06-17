@@ -1,10 +1,34 @@
 # NEWS
 #--------------------------------------------------------------------------
 # What: What are the news for connectedness package?
-# Time-stamp: <2006-05-02 02:28:04 ggorjan>
+# Time-stamp: <2006-08-08 03:27:20 ggorjan>
 #--------------------------------------------------------------------------
 
-# 2006-05-01 version 0.2
+# 2006-08-?? version 0.2-1
+#--------------------------------------------------------------------------
+
+o NA's in either x or y are not removed by default, but only when
+  drop=TRUE. Subset method gains dropNA=NULL argument due to
+  this. Now subset arguments are properly placed after '...'. 2006-08-08
+
+o Added unit tests. 2006-08-08
+
+o Removed connectedness.package.Rd as it is not really needed
+  here. 2006-08-08
+
+o LGPL -> GPL. 2006-06-17
+
+o Removed dependency on package RColorBrewer since this was not really
+  needed. I needed RColorBrewer only to get a set of default distinct
+  colors. 2006-06-17
+
+o Only unique levels are printed out in Levels* columns. 2006-06-06
+
+o Percent in form of 33 and not 0.33. 2006-06-06
+
+o Minor documentation fixes - typos etc. 2006-05-02
+
+# 2006-05-02 version 0.2
 #--------------------------------------------------------------------------
 
 o Levels of both factors are stored in ret$sets. Argument factor added to

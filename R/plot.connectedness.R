@@ -2,7 +2,7 @@
 ###------------------------------------------------------------------------
 ## What: Plot method
 ## $Id$
-## Time-stamp: <2006-05-02 02:01:24 ggorjan>
+## Time-stamp: <2006-08-08 09:46:29 ggorjan>
 ###------------------------------------------------------------------------
 
 plot.connectedness <- function(x, set=NULL, matrix=TRUE, scale=TRUE,
@@ -17,14 +17,34 @@ plot.connectedness <- function(x, set=NULL, matrix=TRUE, scale=TRUE,
 
   ## --- Set handling ---
 
-  if (!is.null(set)) {
-    x$nSets <- length(set) ## Reduce number of sets
-    x$table <- x$table[x$table$set %in% set, ] ## Keep only defined sets
-    x$table$x <- factor(x$table$x) ## Drop unused levels
-    x$table$y <- factor(x$table$y)
-    x$nlevels <- c(nlevels(x$table$x), nlevels(x$table$y))
-    x$table$set <- as.integer(as.factor(x$table$set)) ## Recode sets from 1:nSets
+  ## Remove sets with unused levels
+  tmp <- levelsBySet(x)
+  tmp <- lapply(tmp, lapply, length)
+  .fun <- function(x)
+  {
+    tmp <- lapply(x, "==", 0)
+    if(any(tmp)) {
+      return(TRUE)
+    } else {
+      return(FALSE)
+    }
   }
+  tmp <- unlist(lapply(tmp, .fun))
+  setMy <- x$sets$Set[!tmp]
+
+  if (!is.null(set)) {
+    if(!(set %in% setMy))
+      stop("can not plot sets with unused levels")
+  } else {
+    set <- setMy
+  }
+
+  x$nSets <- length(set) ## Reduce number of sets
+  x$table <- x$table[x$table$set %in% set, ] ## Keep only defined sets
+  x$table$x <- factor(x$table$x) ## factorize values from a table
+  x$table$y <- factor(x$table$y)
+  x$nlevels <- c(nlevels(x$table$x), nlevels(x$table$y))
+  x$table$set <- as.integer(as.factor(x$table$set)) ## Recode sets from 1:nSets
 
   ## --- Tick preparation ---
 
@@ -57,14 +77,13 @@ plot.connectedness <- function(x, set=NULL, matrix=TRUE, scale=TRUE,
   ## --- Tweak default color and possibly missing col ---
 
   if (is.null(col)) {
-    colN <- length(connectedness:::.colors)
+    colN <- length(.colors)
     if (x$nSets > colN) {
       msg <- paste("Error: you have more than", colN, "sets;",
-                   "so you will have to specify colors by yourself")
-      cat(msg, fill=TRUE)
-      return()
+                   "you will have to specify colors by yourself")
+      stop(msg)
     }
-    col <- connectedness:::.colors[1:x$nSets]
+    col <- .colors[1:x$nSets]
   }
   if (is.null(polygonArg$col)) polygonArg$col <- col
   if (is.null(pointsArg$col)) pointsArg$col <- col
@@ -157,17 +176,19 @@ plot.connectedness <- function(x, set=NULL, matrix=TRUE, scale=TRUE,
 }
 
 if (FALSE) { ## Code to generate qualitative colors
-  pals <- c("Set1", "Dark2", "Accent", "Paired", "Set2", "Set3")
-  palsN <- brewer.pal.info[pals, "maxcolors"]
-  .colors <- vector(length=sum(palsN))
-  j <- 1
-  for (i in seq(along=pals)) {
-    .colors[j:(j - 1 + palsN[i])] <- do.call("brewer.pal",
-                                             args=list(n=palsN[i],
-                                                       name=pals[i]))
-    j <- j + palsN[i]
+  if(require(RColorBrewer)) {
+    pals <- c("Set1", "Dark2", "Accent", "Paired", "Set2", "Set3")
+    palsN <- brewer.pal.info[pals, "maxcolors"]
+    .colors <- vector(length=sum(palsN))
+    j <- 1
+    for (i in seq(along=pals)) {
+      .colors[j:(j - 1 + palsN[i])] <- do.call("brewer.pal",
+                                               args=list(n=palsN[i],
+                                               name=pals[i]))
+      j <- j + palsN[i]
+    }
+    .colors <- unique(.colors)
   }
-  .colors <- unique(.colors)
 }
 
 .colors <-

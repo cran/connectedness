@@ -2,7 +2,7 @@
 %--------------------------------------------------------------------------
 % What: Get levels by disconnected sets
 % $Id$
-% Time-stamp: <2006-05-02 02:31:11 ggorjan>
+% Time-stamp: <2006-08-08 09:19:39 ggorjan>
 %--------------------------------------------------------------------------
 
 \name{levelsBySet}
@@ -12,7 +12,9 @@
 \title{Get levels by disconnected sets}
 
 \description{
-  \code{levelsBySet} helps you to retrieve levels of disconnected sets.   
+
+\code{levelsBySet} helps you to retrieve levels of disconnected sets.
+
 }
 
 \usage{levelsBySet(x, set=NULL, factor="xy")}
@@ -25,13 +27,15 @@
 }
 
 \value{
-  A list with factor levels within list of disconnected set(s).   
+
+A list with factor levels within list of disconnected set(s).
+
 }
 
 \author{Gregor Gorjanc}
 
 \seealso{
-  \code{\link{connectedness}}, \code{\link{levelsBySet}} and
+  \code{\link{connectedness}}, \code{\link{subset.connectedness}} and
   \code{\link{plot.connectedness}}
 }
 
@@ -40,16 +44,17 @@
 data(connect)
 table(connect$group, connect$season)
 tmp <- connectedness(x=connect$group, y=connect$season)
+tmpD <- connectedness(x=connect$group, y=connect$season, drop=TRUE)
 
 ## levelBySet method
 levelsBySet(x=tmp)
+levelsBySet(x=tmpD)
 levelsBySet(x=tmp, set=1, factor="x")
 levelsBySet(x=tmp, set=c(1, 2), factor="y")
 
 }
 
 \keyword{misc}
-\keyword{manip}
 
 %--------------------------------------------------------------------------
 % levelsBySet.Rd ends here

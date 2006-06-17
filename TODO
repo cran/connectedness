@@ -1,29 +1,38 @@
 # TODO
 #--------------------------------------------------------------------------
 # What: ToDo, plans, ...
-# Time-stamp: <2006-05-01 22:38:45 ggorjan>
+# Time-stamp: <2006-08-08 02:40:05 ggorjan>
 #--------------------------------------------------------------------------
 
 # SHORT-TERM
 #--------------------------------------------------------------------------
 
-- submit figure to RGG
-- add one larger (in terms of number of levels and factors) example
-- write vignette for two-way classification
-- NA handling (it is not strictly neccessary to exclude NA's for subset)
+- add one larger (in terms of number of levels and factors?) example -
+   Searle?
+
+- write vignette/R news for two-way classification
+
 - example function for many factors i.e. all in one - is this actually
   Weeks & Wiliams procedure or can we extend Fernando's method in more than
   two dimensions?
 
+- In which case did the following error came up?
+
+Number of disconnected sets: 1
+Sets:
+Error in substr(x, as.integer(start), as.integer(stop)) :
+        extracting substrings from a non-character object
+
 # LONG_TERM
 #--------------------------------------------------------------------------
 
-- work on other approaches
+- work on other approaches; are there any volunteers? ;)
 
 # IF?
 #--------------------------------------------------------------------------
 
-- write a JSS paper
+- write a JSS paper; would need to implement also other aproaches!
+
 - citation()
 
 #--------------------------------------------------------------------------

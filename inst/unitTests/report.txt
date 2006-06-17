@@ -1,0 +1,22 @@
+RUNIT TEST PROTOCOL -- Wed Aug  9 08:13:40 2006 
+*********************************************** 
+Number of test functions: 1 
+Number of errors: 0 
+Number of failures: 0 
+
+ 
+1 Test Suite : 
+connectedness unit testing - 1 test function, 0 errors, 0 failures
+
+
+
+Details 
+*************************** 
+Test Suite: connectedness unit testing 
+Test function regexp: ^test.+ 
+Test file regexp: ^runit.+\.[rR]$ 
+Involved directory: 
+/home/ggorjan/programs/R/devel/connectedness/connectedness/tests/../inst/unitTests 
+--------------------------- 
+Test file: /home/ggorjan/programs/R/devel/connectedness/connectedness/tests/../inst/unitTests/runit.connectedness.R 
+test.connectedness: ... OK (0.03 seconds)
