@@ -1,12 +1,13 @@
 Package: connectedness
-Type: Package
-Title: Find disconnected sets in a two-way classification
-Version: 0.2-1
-Date: 2006-06-17
+Title: Find disconnected subsets for a two-way classification
+Description: Package provides functions to find and plot disconnected
+  subsets and hence test for estimability in a two-way cell-means
+  model without interaction.
 Author: Gregor Gorjanc (colors were taken from RColorBrewer package)
 Maintainer: Gregor Gorjanc <gregor.gorjanc@bfro.uni-lj.si>
-Description: Functions to find, plot and subset disconnected sets in
-  a two-way classification without interaction
 License: GPL version 2 or later
-URL: http://www.bfro.uni-lj.si/MR/ggorjan
-Packaged: Wed Aug  9 23:56:18 2006; ggorjan
+URL: http://wiki.r-project.org/rwiki/doku.php?id=packages:cran:connectedness
+Version: 0.2.2
+Date: 2007-03-03
+Imports: methods
+Packaged: Sun Mar  4 13:17:25 2007; ggorjan

@@ -1,11 +1,11 @@
-## connectedness.R
+### connectedness.R
 ###------------------------------------------------------------------------
-## What: Find disconnected sets for two-way classification
-## $Id$
-## Time-stamp: <2006-08-09 08:03:28 ggorjan>
+### What: Find disconnected subsets for two-way classification
+### $Id: connectedness.R 80 2007-03-04 11:52:04Z ggorjan $
+### Time-stamp: <2007-03-03 21:30:05 ggorjan>
 ###------------------------------------------------------------------------
 
-connectedness <- function(x, y, sort=TRUE, subset=TRUE, drop=FALSE)
+connectedness <- function(x, y, sort=TRUE, subsetData=TRUE, drop=FALSE)
 {
   ## --- Checks & Setup ---
 
@@ -18,8 +18,6 @@ connectedness <- function(x, y, sort=TRUE, subset=TRUE, drop=FALSE)
 
   ## --- Remove NA's and unused levels ---
 
-  xOrig <- x
-  yOrig <- y
   full <- complete.cases(x, y)
 
   if(drop) {
@@ -28,6 +26,7 @@ connectedness <- function(x, y, sort=TRUE, subset=TRUE, drop=FALSE)
       y <- y[full]
       if(is.factor(x)) x <- factor(x) # \ drop unused levels if these
       if(is.factor(y)) y <- factor(y) # / are factors
+      lengthX <- length(x)
     }
   }
 
@@ -41,62 +40,67 @@ connectedness <- function(x, y, sort=TRUE, subset=TRUE, drop=FALSE)
     h[h[, i] > 0, i] <- i
   }
 
-  ## --- Find sets ---
+  ## --- Find subsets ---
 
-  c <- rep(0, times=nrow(h))
+  cSubset <- rep(0, times=nrow(h))
   for(i in 1:cols) {
-    c <- c + h[, i]
-    test <- c > i
+    cSubset <- cSubset + h[, i]
+    test <- cSubset > i
     if(any(test)) {
-      d <- c[test]
-      c[test] <- i
-      test <- c %in% (d - i)
-      if(any(test)) c[test] <- i
+      d <- cSubset[test]
+      cSubset[test] <- i
+      test <- cSubset %in% (d - i)
+      if(any(test)) cSubset[test] <- i
     }
   }
 
   ## --- Output ---
 
-  sets <- unique(c)
-  nSets <- length(sets)
+  subsets <- unique(cSubset)
+  nSubsets <- length(subsets)
 
   ret <- vector(mode="list", length=7)
-  names(ret) <- c("factors", "nlevels", "nSets", "sets", "table", "subset", "drop")
-  ret[[1]] <- c(xLab, yLab)
-  ret[[2]] <- c(rows, cols)
-  ret[[3]] <- nSets
-  ret[[4]] <- data.frame(Set=1:nSets, Freq=0, Percent=0, Levels1=NA, Levels2=NA)
-  ret[[5]] <- as.data.frame(tab)
-  if(subset) {
-    ret[[6]] <- data.frame(keep=full, set=1)
+  names(ret) <- c("factors", "nlevels", "nSubsets", "subsets", "table", "subsetData", "drop")
+  ret$factors <- c(xLab, yLab)
+  ret$nlevels <- c(rows, cols)
+  ret$nSubsets <- nSubsets
+  ret$subsets <- data.frame(Subset=1:nSubsets, Freq=0, Percent=0, Levels1=NA, Levels2=NA)
+  ret$table <- as.data.frame(tab)
+  if(subsetData) {
+    ret$subsetData <- data.frame(keep=full, subset=1)
   } else {
-    ret[[6]] <- NA
+    ret$subsetData <- NA
   }
-  ret[[7]] <- drop
+  ret$drop <- drop
   ret$table <- ret$table[!(ret$table$Freq == 0), ]
-  ret$table$set <- 1
+  ret$table$subset <- 1
   rownames(ret$table) <- 1:nrow(ret$table)
 
-  for(i in seq(along=sets)) {
-    tmp <- names(c)[c == sets[i]]
+  for(i in seq(along=subsets)) {
+    tmp <- names(cSubset)[cSubset == subsets[i]]
     tmp1 <- ret$table[ret$table$x %in% tmp, "y"]
-    ret$sets[i, "Freq"] <- sum(x %in% tmp)
-    ret$sets[i, "Percent"] <- ret$sets[i, "Freq"] / lengthX * 100
-    ret$sets[i, "Levels1"] <- paste(unique(tmp), collapse=" ")
-    ret$sets[i, "Levels2"] <- paste(unique(tmp1), collapse=" ")
-    ret$table[(ret$table$x %in% tmp), "set"] <- i
-    if(subset) {
-      ret$subset[(x %in% tmp), "set"] <- i
+    ## | due to possible NA
+    ret$subsets[i, "Freq"] <- sum(x %in% tmp | y %in% tmp1)
+    ret$subsets[i, "Percent"] <- ret$subsets[i, "Freq"] / lengthX * 100
+    ret$subsets[i, "Levels1"] <- paste(unique(tmp), collapse=" ")
+    ret$subsets[i, "Levels2"] <- paste(unique(tmp1), collapse=" ")
+    ## | due to possible NA
+    ret$table[(ret$table$x %in% tmp | ret$table$y %in% tmp1), "subset"] <- i
+    if(subsetData) {
+      ret$subsetData[(x %in% tmp), "subset"] <- i
     }
   }
   if(sort) {
-    ret$sets <- ret$sets[order(ret$sets$Freq, decreasing=TRUE), ]
-    ret$sets[, "Set"] <- rownames(ret$sets) <- 1:nSets
+    ret$subsets <- ret$subsets[order(ret$subsets$Freq, decreasing=TRUE), ]
+    row.names(ret$subsets) <- 1:nSubsets
   }
 
   class(ret) <- c("connectedness", class(ret))
-  return(ret)
+  ret
 }
 
+is.connectedness <- function(x)
+  inherits(x=x, what="connectedness")
+
 ###------------------------------------------------------------------------
-## connectedness.R ends here
+### connectedness.R ends here

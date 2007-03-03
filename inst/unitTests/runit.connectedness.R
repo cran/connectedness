@@ -1,8 +1,8 @@
-## runit.connectedness.R
+### runit.connectedness.R
 ###------------------------------------------------------------------------
-## What: Tests for connectedness
-## $Id$
-## Time-stamp: <2006-08-08 09:51:58 ggorjan>
+### What: Tests for connectedness
+### $Id: runit.connectedness.R 80 2007-03-04 11:52:04Z ggorjan $
+### Time-stamp: <2007-03-03 21:10:15 ggorjan>
 ###------------------------------------------------------------------------
 
 ### {{{ --- Test setup ---
@@ -26,26 +26,27 @@ sub12 <- sub12[order(as.integer(rownames(sub12))), ]
 
 subD1 <- connect[c(2, 3, 4, 10), ]
 
-## levelBySet method
+## levelBySubset method
 
-levelsBySetTest <- list()
-levelsBySetTest$"1" <- list()
-levelsBySetTest$"1"$Levels1 <- c("C", "D", "E", "G")
-levelsBySetTest$"1"$Levels2 <- c("2", "4")
-levelsBySetTest$"2" <- list()
-levelsBySetTest$"2"$Levels1 <- c("A", "B", "F")
-levelsBySetTest$"2"$Levels2 <- c("1", "3")
+levelsBySubsetTest <- list()
+levelsBySubsetTest$"2" <- list()
+levelsBySubsetTest$"2"$Levels1 <- c("C", "D", "E", "G")
+levelsBySubsetTest$"2"$Levels2 <- c("2", "4")
+levelsBySubsetTest$"1" <- list()
+levelsBySubsetTest$"1"$Levels1 <- c("A", "B", "F")
+levelsBySubsetTest$"1"$Levels2 <- c("1", "3")
 
-levelsBySetTestX1 <- levelsBySetTest
-levelsBySetTestX1$"2" <- NULL
-levelsBySetTestX1$"1"$Levels2 <- NULL
+levelsBySubsetTestX1 <- levelsBySubsetTest
+levelsBySubsetTestX1$"2" <- NULL
+levelsBySubsetTestX1$"1"$Levels2 <- NULL
 
-levelsBySetTestY12 <- levelsBySetTest
-levelsBySetTestY12$"1"$Levels1 <- NULL
-levelsBySetTestY12$"2"$Levels1 <- NULL
+levelsBySubsetTestY12 <- levelsBySubsetTest
+levelsBySubsetTestY12$"1"$Levels1 <- NULL
+levelsBySubsetTestY12$"2"$Levels1 <- NULL
 
 tmpD1 <- tmpD
 class(tmpD1) <- "list"
+
 ### }}}
 ### {{{ --- connectedness ---
 
@@ -53,28 +54,28 @@ test.connectedness <- function()
 {
   ## --- connectedness ---
 
-  checkException(connectedness(x=1:14, y=1:5), silent=TRUE)
+  checkException(connectedness(x=1:14, y=1:5))
   ## other tests bellow test for the validity of output from connectedness()
 
   ## --- plot ---
 
-  checkException(plot(x=tmp, set=3), silent=TRUE)
+  checkException(plot(x=tmp, subset=3))
 
   ## --- subset ---
 
-  checkException(subset(tmpSE), silent=TRUE)
-  checkIdentical(subset(x=tmp, data=connect, set=1), sub1)
-  checkIdentical(subset(x=tmp, data=connect, set=2), sub2)
-  checkIdentical(subset(x=tmp, data=connect, set=c(1, 2)), sub12)
+  checkException(subset(tmpSE))
+  checkIdentical(subset(x=tmp, data=connect, subset=1), sub1)
+  checkIdentical(subset(x=tmp, data=connect, subset=2), sub2)
+  checkIdentical(subset(x=tmp, data=connect, subset=c(1, 2)), sub12)
   checkEquals(subset(x=tmp, data=connect), connect) ## why does identical fail here?
-  checkIdentical(subset(x=tmp, data=connect, set=1, dropNA=TRUE), subD1)
+  checkIdentical(subset(x=tmp, data=connect, subset=1, dropNA=TRUE), subD1)
 
-  ## --- levelsBySet ---
+  ## --- levelsBySubset ---
 
-  checkIdentical(levelsBySet(x=tmpD), levelsBySetTest)
-  checkIdentical(levelsBySet(x=tmpD, set=1, factor="x"), levelsBySetTestX1)
-  checkIdentical(levelsBySet(x=tmpD, set=c(1, 2), factor="y"), levelsBySetTestY12)
-  checkException(levelsBySet(tmpD1), silent=TRUE)
+  checkIdentical(levelsBySubset(x=tmpD), levelsBySubsetTest)
+  checkIdentical(levelsBySubset(x=tmpD, subset=1, factor="x"), levelsBySubsetTestX1)
+  checkIdentical(levelsBySubset(x=tmpD, subset=c(1, 2), factor="y"), levelsBySubsetTestY12)
+  checkException(levelsBySubset(tmpD1))
 }
 
 ### }}}
@@ -85,4 +86,4 @@ test.connectedness <- function()
 ### }}}
 
 ###------------------------------------------------------------------------
-## runit.connectedness.R ends here
+### runit.connectedness.R ends here

@@ -1,5 +1,5 @@
-connectedness version 0.2
-Copyright (C) 2006 Gregor Gorjanc
+connectedness
+Copyright (C) 2006-2007 Gregor Gorjanc
 
 This package is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -17,6 +17,6 @@ Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. You can also download
 it from http://www.gnu.org/copyleft/gpl.html in HTML and from
 http://www.gnu.org/copyleft/gpl.txt in plain text format.
 
-Additionally, you can also get a copy at R_HOME/share/licenses/GPL*,
-where R_HOME indicates root of R installation, say C:/Program Files/R/R-2.3.0
-for R 2.3.0 under MS Windows.
+Additionally, you can also get a copy at R_HOME/share/licenses/GPL*, where
+R_HOME indicates root of R installation, say C:/Program Files/R/R-version
+under MS Windows.

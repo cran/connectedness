@@ -1,0 +1,219 @@
+% connectedness.Rnw
+% -------------------------------------------------------------------------
+% What: Identify connected subsets of the data
+% $Id: connectedness.Rnw 78 2007-03-04 11:49:09Z ggorjan $
+% Time-stamp: <2007-03-03 22:17:16 ggorjan>
+% -------------------------------------------------------------------------
+
+% --- Vignette stuff ---
+% -------------------------------------------------------------------------
+
+%\VignetteIndexEntry{Identify connected subsets of the data}
+%\VignettePackage{connectedness}
+%\VignetteKeywords{graphics, plots, connectedness, estimability}
+
+% --- Preamble ---
+% -------------------------------------------------------------------------
+
+% Document class and general packages
+% -------------------------------------------------------------------------
+\documentclass[fleqn,a4paper]{article}  % fleqn - allignment of equations
+                                        % a4paper appropriate page size
+
+\usepackage{graphicx}                   % For inclusion of pictures, ...
+\usepackage[authoryear]{natbib}         % Bibliography - Natbib
+\newcommand{\SortNoop}[1]{}             % Sort command for bib entries
+\usepackage{hyperref}
+
+\usepackage{hyperref}
+
+\hypersetup{%
+  pdftitle={Identify connected subsets of the data},
+  pdfauthor={Gregor Gorjanc},
+  pdfkeywords={graphics, plots, connectedness, estimability}
+}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}} % Email command
+
+\makeatletter                           % Allow the use of @ in command names
+
+% Paragraph and page
+% -------------------------------------------------------------------------
+
+\usepackage{setspace}                   % Line spacing
+\onehalfspacing
+\setlength\parskip{\medskipamount}
+\setlength\parindent{0pt}
+
+% --- Lyx Tips&Tricks: better formatting, less hyphenation problems ---
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\vfuzz \hfuzz
+\raggedbottom
+
+% Page size
+\usepackage{geometry}
+\geometry{verbose,a4paper,tmargin=3.0cm,bmargin=3.0cm,lmargin=2.5cm,
+  rmargin=2.5cm,headheight=20pt,headsep=0.7cm,footskip=12pt}
+
+\makeatother                            % Cancel the effect of \makeatletter
+
+% R and friends
+% -------------------------------------------------------------------------
+
+\newcommand{\program}[1]{{\textit{\textbf{#1}}}}
+\newcommand{\code}[1]{{\texttt{#1}}}
+
+% http://www.bioconductor.org/develPage/guidelines/vignettes/vignetteGuidelines.pdf
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+\newcommand{\Rfunction}[1]{{\texttt{#1}}}
+\newcommand{\Rpackage}[1]{{\textit{#1}}}
+\newcommand{\Rclass}[1]{{\textit{#1}}}
+\newcommand{\Rmethod}[1]{{\textit{#1}}}
+\newcommand{\Rfunarg}[1]{{\textit{#1}}}
+
+\newcommand{\R}{\program{R}}
+\newcommand{\VCE}{\program{VCE}}
+\newcommand{\PEST}{\program{PEST}}
+
+\usepackage{Sweave}                     % Sweave
+\SweaveOpts{strip.white=all, keep.source=TRUE}
+
+<<options, echo=FALSE, results=hide>>=
+options(width=85)
+@
+
+% --- Document ---
+% -------------------------------------------------------------------------
+
+\begin{document}
+
+\title{Identify connected subsets of the data}
+\author{
+  Gregor Gorjanc\\
+  \email{gregor.gorjanc@bfro.uni-lj.si}
+}
+
+\maketitle
+
+\section{Introduction}
+
+\R{} package \Rpackage{connectedness} provides functions to identify
+(dis)connected subsets in the data \citep{Searle:1987}. Current
+implementation finds disconnected sets in a two-way classification without
+interaction as proposed by \cite{Fernando:1983}.
+
+\section{Demo}
+
+\subsection{Data}
+
+Package ships with an example dataset \Robject{connect}, which contains two
+variables: \code{group} and \code{season}. This dataset is really small,
+but big enough to show the idea.
+
+<<data>>=
+library(connectedness)
+data(connect)
+connect
+table(connect$group, connect$season)
+@
+
+As can be seen, some values are missing and cross-tabulation clearly shows
+that this design is unbalanced. Instead of looking hard into the
+cross-tabulation table we can use \Rfunction{connectedness()} function,
+which will tell us if there are any disconnected subsets in this data. A
+subset is defined as a part of the data, where partitioning is based on
+factor levels. Things are simple in one dimension, but complicate when more
+factors are involved.  Data is said to be connected, if we can connect
+cells in a cross-table in such a way that all ``filled'' cells are
+connected \citep{Searle:1987}. Example will demonstrate this in turn.
+
+\subsection[connectedness()]{\Rfunction{connectedness()}}
+
+Function \Rfunction{connectedness()} accepts variables and returns object
+of class \Rclass{connectedness}. Its print method shows number of
+disconnected subsets and ``summary'' by each subset: number of records and
+levels or each factor. Example dataset has 3 disconnected subsets. Third
+subset is a bit special as it has only one level of \code{group} factor,
+but none for \code{season} factor - all non-factor variables are converted
+to factors. Such subsets can be removed by use of \code{drop=TRUE} in call
+to \Rfunction{connectedness} - check its help page for the details.
+
+<<connectedness>>=
+tmp <- connectedness(x=connect$group, y=connect$season)
+tmp
+@
+
+\subsection[plot()]{\Rfunction{plot()}}
+
+Since picture tells more than hundred words, there is also a plot method.
+It accepts object of class \Rclass{connectedness}. It has various arguments
+to control the plot. Check its help page for the details. We will use
+arguments \Rfunarg{lines=TRUE}, \Rfunarg{linesSubset=1} and
+\Rfunarg{linesArg=list(col="black", lwd=2)} to add a line to the plot for
+subset 1 to show the intuitive meaning of connectedness. For better display
+we increase the width of the line and set its colour to black. Third subset
+is not shown on the picture, since it does not have any data on second
+factor. Read help page for the details.
+
+\begin{figure}[htbp]
+  \begin{center}
+
+<<plot, fig=TRUE>>=
+plot(tmp, lines=TRUE, linesSubset=1,
+     linesArg=list(col="black", lwd=2))
+@
+
+\caption{\label{fig:map}Graphical display of subsets in the data based on
+  group and season factors; grid shows distribution of data, colours
+  differentiate subsets and line represents the intuitive meaning of
+  connectedness}
+
+  \end{center}
+\end{figure}
+
+\subsection{Other utilities}
+
+Now we know that there are three subsets in our data. If we want to get
+levels for factors by each subset, we can use \Rfunction{levelsBySubset}
+function.
+
+<<levelsBySubset>>=
+levelsBySubset(x=tmp)
+@
+
+If we want to use mentioned factors in our statistical model, we can use
+information from connectedness analysis. Namely, disconnectedness causes
+problems in estimability. \Rfunction{subset()} can be used to subset the
+data and we can then perform separate analyses per subset.
+
+<<subset>>=
+subset(x=tmp, data=connect, subset=1)
+@
+
+\section{Future plans}
+
+Current functionality and implementation is light and neat due to
+simplicity of the used algorithm by \cite{Fernando:1983}. However, it is
+limited to two factors only. Further versions will try to cope with more
+general approaches as well as to quantify the degree of connectedness
+between levels. Please do not hesitate to contact me in case of
+suggestions, contributions, bugs or enthusiasm to take over the development
+of the package.
+
+\section[R session information]{\R{} Session information}
+
+<<sessionInfo, results=tex>>=
+toLatex(sessionInfo())
+@
+
+\bibliographystyle{apalike}
+\bibliography{library}
+
+\end{document}
+
+% -------------------------------------------------------------------------
+% connectedness. ends here

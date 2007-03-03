@@ -1,34 +1,34 @@
-% levelsBySet.Rd
+% levelsBySubset.Rd
 %--------------------------------------------------------------------------
-% What: Get levels by disconnected sets
-% $Id$
-% Time-stamp: <2006-08-08 09:19:39 ggorjan>
+% What: Get levels by disconnected subsets
+% $Id: levelsBySubset.Rd 77 2007-03-03 18:00:55Z ggorjan $
+% Time-stamp: <2007-03-03 18:59:42 ggorjan>
 %--------------------------------------------------------------------------
 
-\name{levelsBySet}
+\name{levelsBySubset}
 
-\alias{levelsBySet}
+\alias{levelsBySubset}
 
-\title{Get levels by disconnected sets}
+\title{Get levels by disconnected subsets}
 
 \description{
 
-\code{levelsBySet} helps you to retrieve levels of disconnected sets.
+\code{levelsBySubset} helps you to retrieve levels of disconnected subsets.
 
 }
 
-\usage{levelsBySet(x, set=NULL, factor="xy")}
+\usage{levelsBySubset(x, subset=NULL, factor="xy")}
 
 \arguments{
   \item{x}{connectedness, output from \code{connectedness}}
-  \item{set}{integer, set number(s)}
+  \item{subset}{integer, subset number(s)}
   \item{factor}{character, which factor levels should we print, "x", "y",
     or "xy"}
 }
 
 \value{
 
-A list with factor levels within list of disconnected set(s).
+A list with factor levels within list of disconnected subset(s).
 
 }
 
@@ -46,15 +46,15 @@ table(connect$group, connect$season)
 tmp <- connectedness(x=connect$group, y=connect$season)
 tmpD <- connectedness(x=connect$group, y=connect$season, drop=TRUE)
 
-## levelBySet method
-levelsBySet(x=tmp)
-levelsBySet(x=tmpD)
-levelsBySet(x=tmp, set=1, factor="x")
-levelsBySet(x=tmp, set=c(1, 2), factor="y")
+## levelBySubset method
+levelsBySubset(x=tmp)
+levelsBySubset(x=tmpD)
+levelsBySubset(x=tmp, subset=1, factor="x")
+levelsBySubset(x=tmp, subset=c(1, 2), factor="y")
 
 }
 
 \keyword{misc}
 
 %--------------------------------------------------------------------------
-% levelsBySet.Rd ends here
+% levelsBySubset.Rd ends here

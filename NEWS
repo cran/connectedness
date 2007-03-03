@@ -1,49 +1,102 @@
 # NEWS
 #--------------------------------------------------------------------------
 # What: What are the news for connectedness package?
-# Time-stamp: <2006-08-08 03:27:20 ggorjan>
+# $Id: NEWS 80 2007-03-04 11:52:04Z ggorjan $
+# Time-stamp: <2007-03-04 12:47:40 ggorjan>
 #--------------------------------------------------------------------------
 
-# 2006-08-?? version 0.2-1
+o Upload to CRAN. [2007-03-04]
+
+o codetools seems to be happy - "only parameter ‘x’ changed by assignment"
+  warnings. [2007-03-04]
+
+# 2007-03-03 version 0.2.2
+#--------------------------------------------------------------------------
+
+o Update RWiki and my local website. [2007-03-03]
+
+o Passes R CMD check on R 2.5.0 Under development (unstable) (2006-12-06
+  r40129). [2007-03-03]
+
+o Removed bug in calculation of percentages per subset in case of NA
+  values. [2007-03-03]
+
+o Removed bug in list names in output from levelsBySet - found it after
+  previous bug was removed. [2007-03-03]
+
+o Removed bug due to ordering of subsets with sort=TRUE - subset names were
+  changed only in one place. Now they are not changed at all and therefore
+  consistent through the whole output object. [2007-03-03]
+
+o Added vignette and minor documentation fixes. [2007-03-03]
+
+o Name changes. Argument set to subset in plot.connectedness(),
+  levelsBySubset() and subset.connectedness(), while subset in
+  connectedness() bacomes subsetData. Function levelsBySet() becomes
+  levelsBySubset(). Sorry :( [2007-03-03]
+
+o Now on SourceForge http://sourceforge.net/projects/r-ggorjan/
+  [2006-11-03]
+
+o Passes R CMD check on R 2.4.0 (small fix) and R-devel. [2006-10-31]
+
+o x.y.z version numbering. [2006-10-08]
+
+o Added import (due to is) to NAMESPACE & DESCRIPTION. Passes R CMD check
+  of R 2.3.1 and R 2.5.0. [2006-09-10]
+
+o Removed return() where applicable, reduced number of <- in some
+  places. codetools pointed to some unused objects and to one hidden bug
+  related to unused objects in recycling in plot method; all files under
+  version control. [2006-09-10]
+
+o Small changes in generation of messages for stop(). [2006-08-19]
+
+o Added is.connectedness(). [2006-08-19]
+
+o Added R wiki page to URL field in DESCRIPTION. [2006-08-11]
+  http://wiki.r-project.org/rwiki/doku.php?id=packages:cran:connectedness
+
+# 2006-08-09 version 0.2-1
 #--------------------------------------------------------------------------
 
 o NA's in either x or y are not removed by default, but only when
   drop=TRUE. Subset method gains dropNA=NULL argument due to
-  this. Now subset arguments are properly placed after '...'. 2006-08-08
+  this. Now subset arguments are properly placed after '...'. [2006-08-08]
 
-o Added unit tests. 2006-08-08
+o Added unit tests. [2006-08-08]
 
 o Removed connectedness.package.Rd as it is not really needed
-  here. 2006-08-08
+  here. [2006-08-08]
 
-o LGPL -> GPL. 2006-06-17
+o LGPL -> GPL. [2006-06-17]
 
 o Removed dependency on package RColorBrewer since this was not really
   needed. I needed RColorBrewer only to get a set of default distinct
-  colors. 2006-06-17
+  colors. [2006-06-17]
 
-o Only unique levels are printed out in Levels* columns. 2006-06-06
+o Only unique levels are printed out in Levels* columns. [2006-06-06]
 
-o Percent in form of 33 and not 0.33. 2006-06-06
+o Percent in form of 33 and not 0.33. [2006-06-06]
 
-o Minor documentation fixes - typos etc. 2006-05-02
+o Minor documentation fixes - typos etc. [2006-05-02]
 
 # 2006-05-02 version 0.2
 #--------------------------------------------------------------------------
 
 o Levels of both factors are stored in ret$sets. Argument factor added to
   levelsBySet to print levels of both factors or only one of
-  them. 2006-05-02
+  them. [2006-05-02]
 
 o Subset slot in output of connectedness can be ommited; subset
-  appropriately modified. 2006-05-02
+  appropriately modified. [2006-05-02]
 
 o Complete reorganization in arguments for plot.connectedness(). Now
   separate arguments for plot, polygons, points and lines are
-  possible. Additionaly argument set added to plot. 2006-05-02
+  possible. Additionaly argument set added to plot. [2006-05-02]
 
 o Added arguments lines and linesSet to plot.connectedness() to draw lines
-  between connected cells. 2006-05-01
+  between connected cells. [2006-05-01]
 
 # 2006-04-30 version 0.1
 #--------------------------------------------------------------------------

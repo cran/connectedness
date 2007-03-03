@@ -1,8 +1,8 @@
-## doRUnit.R
+### doRUnit.R
 ###------------------------------------------------------------------------
-## What: Run RUnit tests
-## $Id$
-## Time-stamp: <2006-08-09 23:55:48 ggorjan>
+### What: Run RUnit tests
+### $Id: doRUnit.R 16 2006-11-03 00:07:53Z ggorjan $
+### Time-stamp: <2006-09-10 02:47:09 ggorjan>
 ###------------------------------------------------------------------------
 
 if(require("RUnit", quietly=TRUE)) {
@@ -26,10 +26,10 @@ if(require("RUnit", quietly=TRUE)) {
   ## --- Testing ---
 
   ## Define tests
-  testsuite <- defineTestSuite(name=paste(pkg, "unit testing"),
+  testSuite <- defineTestSuite(name=paste(pkg, "unit testing"),
                                            dirs=path)
   ## Run
-  tests <- runTestSuite(testsuite)
+  tests <- runTestSuite(testSuite)
 
   ## Print results
   printTextProtocol(tests)
@@ -46,4 +46,4 @@ if(require("RUnit", quietly=TRUE)) {
 }
 
 ###------------------------------------------------------------------------
-## doRUnit.R ends here
+### doRUnit.R ends here

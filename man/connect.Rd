@@ -1,8 +1,8 @@
 % connect.Rd
 %--------------------------------------------------------------------------
 % What: Example dataset
-% $Id$
-% Time-stamp: <2006-04-30 16:32:53 ggorjan>
+% $Id: connect.Rd 80 2007-03-04 11:52:04Z ggorjan $
+% Time-stamp: <2007-03-03 17:20:03 ggorjan>
 %--------------------------------------------------------------------------
 
 \name{connect}
@@ -14,7 +14,7 @@
 \title{Example data}
 
 \description{
-  Example data with two disconnected sets taken from Fernando et
+  Example data with two disconnected subsets taken from Fernando et
   al. (1983) with added NA's to test robustnes of the code.   
 }
 
